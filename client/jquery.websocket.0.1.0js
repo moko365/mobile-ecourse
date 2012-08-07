@@ -1,0 +1,69 @@
+var WS;
+if (!WS) {
+    WS = {
+	server: "",
+	protocol: "[echo-protocol]",
+
+	// Where to show response messages
+	messageDiv: "#message",
+    }
+}
+
+(function($) {
+'use strict';
+
+var ws;
+
+function onWsMessage(message) {
+   var json = JSON.parse(message.data);
+
+   if (json.type === 'message') {
+   	WS.messageDiv.append('<p>' + json.data.message + '</p>');
+   }
+}
+
+$.fn.sendMessage = function () {
+	$(this).click(function() {
+    	ws.send("[message]");
+	});
+};
+
+$.fn.createWebSocket = function (param) {
+
+  if (typeof param.server != '') {
+     WS.server = param.server;
+  }
+  if (typeof param.protocol != '') {
+     WS.protocol = param.protocol;
+  }
+  if (typeof param.message != '') {
+      WS.message = param.message;
+  }
+  
+  if ("WebSocket" in window)
+  {
+     // Let us open a web socket
+     ws = new WebSocket(WS.server, WS.protocol);
+     ws.onopen = function()
+     {
+	$(this).append("<h2>Done</h2>");
+     };
+
+     ws.onmessage = onWsMessage;
+
+     ws.onclose = function()
+     { 
+        // websocket is closed.
+     };
+     ws.onerror = function()
+     { 
+        $(this).html("<h1>error</h1>");
+     };
+  }
+  else
+  {
+     alert("Your browser does NOT support WebSocket!");
+  }
+};
+
+})(jQuery);

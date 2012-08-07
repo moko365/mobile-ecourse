@@ -1,0 +1,8 @@
+
+API
+===
+
+ /start
+ /play?s=<session_key>&i=<video_id>
+ /stop?s=<session_key>&i=<video_id>
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+<link rel="stylesheet" type="text/css" media="all" href="http://www.moko365.com/enterprise/wp-content/themes/moko365/signup.css?v=0.1"/>
+<script type='text/javascript' src="./json2.js"></script>
+<script type='text/javascript' src="./jquery.min.js"></script>
+<script type='text/javascript' src="./jquery.websocket.js?v=8"></script>
+</head>
+<body>
+<div id="message"></div>
+
+  <div id='signup'>
+    <div id='signup_request'>
+<form method="GET" action="http://svn.moko365.com:8888/start" id="signup_form">
+        <p id='error_message'></p>
+<input type="hidden" name="u" value="jollen@moko365.com" id="email" />
+<input type="text" name="k" value="ABCDEFG123456789" id="license" />
+<button type="submit" id="send">Connect</button>
+</form>
+    </div>
+    <div id='signup_response' style="display:visible;">
+    <div id="player"></div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+
+$("#message").createWebSocket();
+$("#signup_response").bindCourseList();
+$("#player").bindPlayer();
+
+$(document).ready(function () {
+    initSubmitForm();
+});
+
+var ERROR_MSG_SELECTOR = "#error_message";
+var SIGNUP_REQUEST_SELECTOR = "#signup_request";
+var SIGNUP_RESPONSE_SELECTOR = "#signup_response";
+var SIGNUP_FORM_SELECTOR = "#signup_form";
+var EMAIL_INPUT_SELECTOR = "#email";
+var LICENSE_INPUT_SELECTOR = "#license";
+var SUBMIT_INPUT_SELECTOR = "#submit";
+
+var initSubmitForm = function () {
+        $(SIGNUP_FORM_SELECTOR).submit(function () {
+            var $form = $(SIGNUP_FORM_SELECTOR);
+            var $submit = $(SUBMIT_INPUT_SELECTOR);
+            $.ajax({
+                url: $form.attr("action"),
+                type: "GET",
+                dataType: "json",
+                data: {
+                    u: $(EMAIL_INPUT_SELECTOR).val(),
+                    k: $(LICENSE_INPUT_SELECTOR).val(),
+                },
+                beforeSend: function () {
+		    if (!$(EMAIL_INPUT_SELECTOR).val()) {
+	  	        alert("請輸入 License Key!");
+			return false;
+		    }
+                    $submit.val("驗證中...");
+                },
+                complete: function (data, textStatus, jqXHR) {                	
+                    $(SIGNUP_REQUEST_SELECTOR).fadeOut();
+                    $(SIGNUP_RESPONSE_SELECTOR).fadeIn();
+                    $(SM_TEXTAREA_SELECTOR).focus();
+                },
+            });
+            
+            return false;
+        });
+    };
+</script>
+</body>
+</html>

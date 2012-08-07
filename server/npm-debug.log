@@ -1,0 +1,31 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@1.1.32
+3 info using node@v0.8.0
+4 verbose config file /home/jollen/.npmrc
+5 verbose config file /usr/local/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose publish [ '.' ]
+8 verbose read json /var/www/moko365.com/www/course-server/server/package.json
+9 verbose cache add [ '.', null ]
+10 silly cache add name=undefined spec="." args=[".",null]
+11 verbose parsed url { pathname: '.', path: '.', href: '.' }
+12 verbose read json package.json
+13 error addLocal Could not install .
+14 error Error: ENOENT, open 'package.json'
+14 error  { [Error: ENOENT, open 'package.json'] errno: 34, code: 'ENOENT', path: 'package.json' }
+15 error You may report this log at:
+15 error     <http://github.com/isaacs/npm/issues>
+15 error or email it to:
+15 error     <npm-@googlegroups.com>
+16 error System Linux 2.6.32-28-generic
+17 error command "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+18 error cwd /var/www/moko365.com/www/course-server/server
+19 error node -v v0.8.0
+20 error npm -v 1.1.32
+21 error path package.json
+22 error code ENOENT
+23 error message ENOENT, open 'package.json'
+24 error errno 34
+25 error 34 errno
+26 verbose exit [ 34, true ]
